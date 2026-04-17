@@ -13,7 +13,7 @@ function initializeFirebase() {
   let credential;
   let storageBucket;
 
-  // ✅ NEW: Render ENV variables support
+  // ✅ RENDER ENV VARIABLES (MAIN FIX)
   if (
     process.env.FIREBASE_PROJECT_ID &&
     process.env.FIREBASE_CLIENT_EMAIL &&
@@ -26,11 +26,14 @@ function initializeFirebase() {
     });
   }
 
-  // ❌ REMOVE FILE-BASED LOGIC FOR PRODUCTION
+  // ✅ LOCAL DEVELOPMENT FALLBACK
   else if (process.env.NODE_ENV === 'development') {
     console.warn('[Firebase] Using default credentials (dev only)');
     credential = admin.credential.applicationDefault();
-  } else {
+  }
+
+  // ❌ THROW ERROR IF NOTHING PROVIDED
+  else {
     throw new Error('Firebase credentials not configured properly.');
   }
 
