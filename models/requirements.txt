@@ -1,0 +1,111 @@
+==============================
+PROJECT SETUP GUIDE
+==============================
+
+This project is a Flask API using:
+- XGBoost
+- LSTM (TensorFlow/Keras)
+
+------------------------------
+STEP 1: SYSTEM DEPENDENCIES
+------------------------------
+
+For macOS:
+--------------
+brew install libomp
+
+
+For Windows:
+--------------
+1. Install Microsoft C++ Build Tools:
+   https://visualstudio.microsoft.com/visual-cpp-build-tools/
+
+   During installation, select:
+   "Desktop development with C++"
+
+2. If needed (optional):
+   pip install intel-openmp
+
+
+------------------------------
+STEP 2: CREATE VIRTUAL ENV
+------------------------------
+
+Mac / Linux:
+--------------
+python3 -m venv venv
+source venv/bin/activate
+
+Windows:
+--------------
+python -m venv venv
+venv\Scripts\activate
+
+
+------------------------------
+STEP 3: INSTALL REQUIREMENTS
+------------------------------
+
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+
+
+------------------------------
+STEP 4: REQUIRED FILES
+------------------------------
+
+Make sure these files are present in project folder:
+
+- app.py
+- xgb_model.pkl
+- lstm.weights.h5
+- lstm_max.npy
+
+
+------------------------------
+STEP 5: RUN SERVER
+------------------------------
+
+python app.py
+
+
+Server will run at:
+http://127.0.0.1:5001
+
+
+------------------------------
+STEP 6: TEST API
+------------------------------
+
+Endpoint:
+POST /predict
+
+Example JSON:
+
+{
+  "features": {
+    "avg_speed": 70,
+    "total_distance": 30,
+    "location_variance": 0.004,
+    "update_frequency": 0.3,
+    "is_heavy_rain": 1,
+    "is_extreme_temp": 1,
+    "is_hazardous_aqi": 1,
+    "rain_intensity": 85
+  },
+  "sequence": [
+    [0.02, 25, 1, 10],
+    [0.03, 28, 2, 12],
+    [0.02, 26, 1, 11],
+    [0.02, 25, -1, 10],
+    [0.03, 27, 2, 12],
+    [0.02, 24, -2, 9],
+    [0.02, 26, 1, 10],
+    [0.03, 28, 2, 11],
+    [0.02, 25, 1, 10]
+  ]
+}
+
+==============================
+END
+==============================
